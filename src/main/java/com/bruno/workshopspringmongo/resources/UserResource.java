@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bruno.workshopspringmongo.domain.User;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +22,24 @@ public class UserResource {
 
     @RequestMapping(method= RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findAll(){
-        List<UserDTO> list = userService.findAll().stream().map(UserDTO::new).collect(Collectors.toList());
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
-        UserDTO userDTO = new UserDTO(userService.findById(id));
-        return ResponseEntity.ok().body(userDTO);
+        return ResponseEntity.ok(userService.findById(id));
     }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@RequestBody UserDTO userDTO){
+        User user = userService.fromDTO(userDTO);
+        userService.insert(user);
+        URI uri = ServletUriComponentsBuilder
+                    .fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(user.getId())
+                    .toUri();
+        return ResponseEntity.created(uri).build();
+    }
+
 }
