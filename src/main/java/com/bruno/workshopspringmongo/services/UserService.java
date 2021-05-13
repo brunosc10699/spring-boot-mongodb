@@ -5,6 +5,7 @@ import com.bruno.workshopspringmongo.dto.UserDTO;
 import com.bruno.workshopspringmongo.repositories.UserRepository;
 import com.bruno.workshopspringmongo.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,15 @@ public class UserService {
     public void delete(String id){
         findById(id);
         userRepository.deleteById(id);
+    }
+
+    public void update(User user){
+        UserDTO userDTO = findById(user.getId());
+        if(userDTO != null) {
+            userRepository.save(new User(user.getId(), user.getName(), user.getEmail()));
+        } else {
+            throw new ObjectNotFoundException("Objeto não encontrado!");
+        }
     }
 
     public User fromDTO(UserDTO userDTO){
