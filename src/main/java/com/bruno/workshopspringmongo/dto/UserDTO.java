@@ -1,8 +1,11 @@
 package com.bruno.workshopspringmongo.dto;
 
+import com.bruno.workshopspringmongo.domain.Post;
 import com.bruno.workshopspringmongo.domain.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDTO implements Serializable {
 
@@ -12,12 +15,15 @@ public class UserDTO implements Serializable {
     private String name;
     private String email;
 
+    private List<Post> posts = new ArrayList<>();
+
     public UserDTO(){}
 
     public UserDTO(User user){
         id = user.getId();
         name = user.getName();
         email = user.getEmail();
+        posts = user.getPosts();
     }
 
     public String getId() {
@@ -42,5 +48,9 @@ public class UserDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
     }
 }

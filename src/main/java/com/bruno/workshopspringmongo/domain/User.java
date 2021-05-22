@@ -1,5 +1,6 @@
 package com.bruno.workshopspringmongo.domain;
 
+import com.bruno.workshopspringmongo.dto.UserDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -77,6 +78,7 @@ public class User implements Serializable {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", posts='" + posts + '\'' +
                 '}';
     }
 }

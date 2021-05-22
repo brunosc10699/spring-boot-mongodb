@@ -1,5 +1,6 @@
 package com.bruno.workshopspringmongo.resources;
 
+import com.bruno.workshopspringmongo.domain.Post;
 import com.bruno.workshopspringmongo.dto.UserDTO;
 import com.bruno.workshopspringmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,12 @@ public class UserResource {
         User user = new User(id, userDTO.getName(), userDTO.getEmail());
         userService.update(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findAllPostsByUserId(@PathVariable String id){
+        UserDTO userDTO = userService.findById(id);
+        return ResponseEntity.ok().body(userDTO.getPosts());
     }
 
 }
