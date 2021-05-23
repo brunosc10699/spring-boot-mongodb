@@ -1,8 +1,11 @@
 package com.bruno.workshopspringmongo.dto;
 
+import com.bruno.workshopspringmongo.domain.Comment;
 import com.bruno.workshopspringmongo.domain.Post;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PostDTO {
 
@@ -13,6 +16,8 @@ public class PostDTO {
 
     private AuthorDTO author;
 
+    private List<CommentDTO> comments = new ArrayList<>();
+
     public PostDTO(){}
 
     public PostDTO(Post post){
@@ -21,6 +26,7 @@ public class PostDTO {
         title = post.getTitle();
         body = post.getBody();
         author = post.getAuthor();
+        comments = post.getComments();
     }
 
     public String getId() {
@@ -61,5 +67,9 @@ public class PostDTO {
 
     public void setAuthor(AuthorDTO author) {
         this.author = author;
+    }
+
+    public List<CommentDTO> getComments() {
+        return comments;
     }
 }
