@@ -27,4 +27,12 @@ public class PostService {
                 .collect(Collectors.toList());
         return list;
     }
+
+    public List<PostDTO> findPostsContainingSomeText(String text){
+        List<PostDTO> list = postRepository.findPostsContainingSomeText(text)
+                .stream()
+                .map(PostDTO::new)
+                .collect(Collectors.toList());
+        return list;
+    }
 }

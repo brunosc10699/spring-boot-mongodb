@@ -25,6 +25,13 @@ public class PostResource {
     public ResponseEntity<List<PostDTO>> findByTitleContainingIgnoreCase(@RequestParam(value = "text", defaultValue = "") String text){
         text = URL.decodeParam(text);
         List<PostDTO> list = postService.findByTitleStringIgnoreCase(text);
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok(list);
+    }
+
+    @RequestMapping(value = "/searchintitle", method = RequestMethod.GET)
+    public ResponseEntity<List<PostDTO>> findPostsContainingSomeText(@RequestParam(value = "text", defaultValue = "") String text){
+        text = URL.decodeParam(text);
+        List<PostDTO> list = postService.findPostsContainingSomeText(text);
+        return ResponseEntity.ok(list);
     }
 }
