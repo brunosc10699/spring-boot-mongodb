@@ -6,6 +6,7 @@ import com.bruno.workshopspringmongo.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,15 @@ public class PostService {
 
     public List<PostDTO> findPostsContainingSomeText(String text){
         List<PostDTO> list = postRepository.findPostsContainingSomeText(text)
+                .stream()
+                .map(PostDTO::new)
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    public List<PostDTO> fullSearch(String text, Date minDate, Date maxDate){
+        maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+        List<PostDTO> list = postRepository.fullseartch(text, minDate, maxDate)
                 .stream()
                 .map(PostDTO::new)
                 .collect(Collectors.toList());
